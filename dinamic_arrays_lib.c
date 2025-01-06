@@ -504,7 +504,8 @@ struct Complex* resize_Complex_vector(struct Complex* old_vector, uint8_t old_si
     }
 
     for (uint8_t k = 0; k < (new_size > old_size ? old_size : new_size); k++) {
-        new_vector[k] = old_vector[k];
+        new_vector[k].real = old_vector[k].real;
+        new_vector[k].imag = old_vector[k].imag;
     }
     for (uint8_t k = old_size; k < new_size; k++) {
         new_vector[k].real = 0.0f;
@@ -536,7 +537,8 @@ struct Complex* removeItem_Complex_vector(struct Complex* vec, uint8_t vec_size,
     }
 
     for (uint8_t k = 0; k < vec_size - 1; k++) {
-        resulting_vector[k] = (k < item_pos) ? vec[k] : vec[k + 1];
+        resulting_vector[k].real = (k < item_pos) ? vec[k].real : vec[k + 1].real;
+        resulting_vector[k].imag = (k < item_pos) ? vec[k].imag : vec[k + 1].imag;
     }
 
     free(vec);
@@ -566,11 +568,14 @@ struct Complex* insertItem_Complex_vector(struct Complex* vec, uint8_t vec_size,
 
     for (uint8_t k = 0; k < vec_size + 1; k++) {
         if (k < insert_pos) {
-            resulting_vector[k] = vec[k];
+            resulting_vector[k].real = vec[k].real;
+            resulting_vector[k].imag = vec[k].imag;
         } else if (k == insert_pos) {
-            resulting_vector[k] = insert_value;
+            resulting_vector[k].real = insert_value.real;
+            resulting_vector[k].imag = insert_value.imag;
         } else {
-            resulting_vector[k] = vec[k - 1];
+            resulting_vector[k].real = vec[k - 1].real;
+            resulting_vector[k].imag = vec[k - 1].imag;
         }
     }
 
@@ -600,10 +605,12 @@ struct Complex* concat_Complex_vector(struct Complex* vec_left, uint8_t left_siz
     }
 
     for (uint8_t k = 0; k < left_size; k++) {
-        resulting_vector[k] = vec_left[k];
+        resulting_vector[k].real = vec_left[k].real;
+        resulting_vector[k].imag = vec_left[k].imag;
     }
     for (uint8_t m = 0; m < right_size; m++) {
-        resulting_vector[m + left_size] = vec_right[m];
+        resulting_vector[m + left_size].real = vec_right[m].real;
+        resulting_vector[m + left_size].imag = vec_right[m].imag;
     }
 
     free(vec_left);
