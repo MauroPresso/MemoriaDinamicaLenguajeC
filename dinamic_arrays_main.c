@@ -14,6 +14,8 @@ void llenar_Complex_vector(struct Complex *vec, uint8_t cant);
 
 int main()
 {
+    srand(time(NULL));
+    
     // VECTORES ENTEROS
     printf("\n\n\nVECTORES ENTEROS:");
 
@@ -222,7 +224,6 @@ int main()
 
 void llenar_int_vector(int *vec, uint8_t cant)
 {
-    srand(time(NULL));
     for (int i = 0; i < cant; i++)
     {
         vec[i] = rand() % 100;
@@ -231,28 +232,25 @@ void llenar_int_vector(int *vec, uint8_t cant)
 
 void llenar_float_vector(float *vec, uint8_t cant)
 {
-    srand(time(NULL));
     for (int i = 0; i < cant; i++)
     {
-        vec[i] = rand() / (float) RAND_MAX;
+        vec[i] = (rand() / (float) RAND_MAX)*(1.0);
     }
 }
 
 void llenar_double_vector(double *vec, uint8_t cant)
 {
-    srand(time(NULL));
     for (int i = 0; i < cant; i++)
     {
-        vec[i] = rand() / (float) RAND_MAX;
+        vec[i] = (rand() / (float) RAND_MAX)*(1.0);
     }
 }
 
 void llenar_Complex_vector(struct Complex *vec, uint8_t cant)
 {
-    srand(time(NULL));
     for (int i = 0; i < cant; i++)
     {
-        vec[i].real = rand() / (float) RAND_MAX;
-        vec[i].imag = rand() / (float) RAND_MAX;
+        vec[i].real = (rand() / (float) RAND_MAX)*(1.0);
+        vec[i].imag = (rand() / (float) RAND_MAX)*(1.0);
     }
 }
