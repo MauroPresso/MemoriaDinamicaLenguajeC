@@ -555,10 +555,10 @@ struct Complex* removeItem_Complex_vector(struct Complex* vec, uint8_t vec_size,
         printf("El vector es NULL.\n");
         return NULL;
     }
-    if (item_pos > vec_size)
+    if (item_pos >= vec_size)
     {
         printf("Posición inválida para insertar.\n");
-        return 0;
+        return NULL;
     }
 
     struct Complex* resulting_vector = (struct Complex*)malloc((vec_size - 1) * sizeof(struct Complex));
@@ -577,7 +577,7 @@ struct Complex* removeItem_Complex_vector(struct Complex* vec, uint8_t vec_size,
             resulting_vector[k].real = vec[k].real;
             resulting_vector[k].imag = vec[k].imag;
         }
-        else
+        if(k > item_pos)
         {
             resulting_vector[k].real = vec[k + 1].real;
             resulting_vector[k].imag = vec[k + 1].imag;
@@ -623,12 +623,12 @@ struct Complex* insertItem_Complex_vector(struct Complex* vec, uint8_t vec_size,
             resulting_vector[k].real = vec[k].real;
             resulting_vector[k].imag = vec[k].imag;
         } 
-        else if (k == insert_pos) 
+        if (k == insert_pos) 
         {
             resulting_vector[k].real = insert_value.real;
             resulting_vector[k].imag = insert_value.imag;
         } 
-        else 
+        if (k > insert_pos)
         {
             resulting_vector[k].real = vec[k - 1].real;
             resulting_vector[k].imag = vec[k - 1].imag;
