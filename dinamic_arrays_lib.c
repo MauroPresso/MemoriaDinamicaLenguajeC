@@ -473,12 +473,14 @@ double* concat_double_vector(double* vec_left, uint8_t left_size, double* vec_ri
 * @param vec Puntero al vector de enteros.
 * @param cant Cantidad de elementos en el vector.
 */
-void show_Complex_vector(struct Complex *vec, uint8_t cant) {
-    if (vec == NULL) {
+void show_Complex_vector(struct Complex *vec, uint8_t cant) 
+{
+    if (vec == NULL) 
+    {
         printf("El vector es NULL.\n");
-        return;
     }
-    for (uint8_t i = 0; i < cant; i++) {
+    for (uint8_t i = 0; i < cant; i++) 
+    {
         printf("(%.2f, %.2f)\t", vec[i].real, vec[i].imag);
     }
     printf("\n");
@@ -491,25 +493,47 @@ void show_Complex_vector(struct Complex *vec, uint8_t cant) {
 * @param new_size Nuevo tamaño deseado.
 * @return Puntero al nuevo vector redimensionado.
 */
-struct Complex* resize_Complex_vector(struct Complex* old_vector, uint8_t old_size, uint8_t new_size) {
-    if (new_size == 0) {
+struct Complex* resize_Complex_vector(struct Complex* old_vector, uint8_t old_size, uint8_t new_size) 
+{
+    if (new_size == 0) 
+    {
         printf("El nuevo tamaño no puede ser 0.\n");
         return NULL;
     }
 
+    if (new_size == old_size) 
+    {
+        printf("El nuevo tamaño es igual al tamaño viejo.\n");
+        return NULL;
+    }
+
     struct Complex* new_vector = (struct Complex*)malloc(new_size * sizeof(struct Complex));
-    if (new_vector == NULL) {
+    if (new_vector == NULL) 
+    {
         printf("Fallo en la asignación de memoria.\n");
         return NULL;
     }
 
-    for (uint8_t k = 0; k < (new_size > old_size ? old_size : new_size); k++) {
-        new_vector[k].real = old_vector[k].real;
-        new_vector[k].imag = old_vector[k].imag;
+    if(new_size > old_size)
+    {
+        for (uint8_t k = 0; k < old_size /*(new_size > old_size ? old_size : new_size)*/; k++) 
+        {
+            new_vector[k].real = old_vector[k].real;
+            new_vector[k].imag = old_vector[k].imag;
+        }
+        for (uint8_t k = old_size; k < new_size; k++) 
+        {
+            new_vector[k].real = 0.0f;
+            new_vector[k].imag = 0.0f;
+        }
     }
-    for (uint8_t k = old_size; k < new_size; k++) {
-        new_vector[k].real = 0.0f;
-        new_vector[k].imag = 0.0f;
+    else
+    {
+        for (uint8_t k = 0; k < new_size /*(new_size > old_size ? old_size : new_size)*/; k++) 
+        {
+            new_vector[k].real = old_vector[k].real;
+            new_vector[k].imag = old_vector[k].imag;
+        }
     }
 
     free(old_vector);
@@ -524,21 +548,40 @@ struct Complex* resize_Complex_vector(struct Complex* old_vector, uint8_t old_si
 * @param item_pos Posición del elemento a eliminar.
 * @return Puntero al vector resultante.
 */
-struct Complex* removeItem_Complex_vector(struct Complex* vec, uint8_t vec_size, uint8_t item_pos) {
-    if (vec == NULL || item_pos >= vec_size) {
-        printf("Posición inválida para eliminar.\n");
+struct Complex* removeItem_Complex_vector(struct Complex* vec, uint8_t vec_size, uint8_t item_pos) 
+{
+    if (vec == NULL) 
+    {
+        printf("El vector es NULL.\n");
         return NULL;
+    }
+    if (item_pos > vec_size)
+    {
+        printf("Posición inválida para insertar.\n");
+        return 0;
     }
 
     struct Complex* resulting_vector = (struct Complex*)malloc((vec_size - 1) * sizeof(struct Complex));
-    if (resulting_vector == NULL) {
+    if (resulting_vector == NULL) 
+    {
         printf("Fallo en la asignación de memoria.\n");
         return NULL;
     }
 
-    for (uint8_t k = 0; k < vec_size - 1; k++) {
-        resulting_vector[k].real = (k < item_pos) ? vec[k].real : vec[k + 1].real;
-        resulting_vector[k].imag = (k < item_pos) ? vec[k].imag : vec[k + 1].imag;
+    for (uint8_t k = 0; k < vec_size - 1; k++) 
+    {
+        //resulting_vector[k].real = (k < item_pos) ? vec[k].real : vec[k + 1].real;
+        //resulting_vector[k].imag = (k < item_pos) ? vec[k].imag : vec[k + 1].imag;
+        if(k < item_pos)
+        {
+            resulting_vector[k].real = vec[k].real;
+            resulting_vector[k].imag = vec[k].imag;
+        }
+        else
+        {
+            resulting_vector[k].real = vec[k + 1].real;
+            resulting_vector[k].imag = vec[k + 1].imag;
+        }
     }
 
     free(vec);
@@ -554,26 +597,39 @@ struct Complex* removeItem_Complex_vector(struct Complex* vec, uint8_t vec_size,
 * @param insert_value Valor a insertar.
 * @return Puntero al vector resultante.
 */
-struct Complex* insertItem_Complex_vector(struct Complex* vec, uint8_t vec_size, uint8_t insert_pos, struct Complex insert_value) {
-    if (vec == NULL || insert_pos > vec_size) {
+struct Complex* insertItem_Complex_vector(struct Complex* vec, uint8_t vec_size, uint8_t insert_pos, struct Complex insert_value) 
+{
+    if (vec == NULL) 
+    {
+        printf("El vector es NULL.\n");
+        return NULL;
+    }
+    if(insert_pos > vec_size)
+    {
         printf("Posición inválida para insertar.\n");
         return NULL;
     }
-
     struct Complex* resulting_vector = (struct Complex*)malloc((vec_size + 1) * sizeof(struct Complex));
-    if (resulting_vector == NULL) {
+    if (resulting_vector == NULL) 
+    {
         printf("Fallo en la asignación de memoria.\n");
         return NULL;
     }
 
-    for (uint8_t k = 0; k < vec_size + 1; k++) {
-        if (k < insert_pos) {
+    for (uint8_t k = 0; k < vec_size + 1; k++) 
+    {
+        if (k < insert_pos) 
+        {
             resulting_vector[k].real = vec[k].real;
             resulting_vector[k].imag = vec[k].imag;
-        } else if (k == insert_pos) {
+        } 
+        else if (k == insert_pos) 
+        {
             resulting_vector[k].real = insert_value.real;
             resulting_vector[k].imag = insert_value.imag;
-        } else {
+        } 
+        else 
+        {
             resulting_vector[k].real = vec[k - 1].real;
             resulting_vector[k].imag = vec[k - 1].imag;
         }
@@ -592,23 +648,28 @@ struct Complex* insertItem_Complex_vector(struct Complex* vec, uint8_t vec_size,
 * @param right_size Tamaño del segundo vector.
 * @return Puntero al vector resultante.
 */
-struct Complex* concat_Complex_vector(struct Complex* vec_left, uint8_t left_size, struct Complex* vec_right, uint8_t right_size) {
-    if (vec_left == NULL || vec_right == NULL) {
+struct Complex* concat_Complex_vector(struct Complex* vec_left, uint8_t left_size, struct Complex* vec_right, uint8_t right_size) 
+{
+    if (vec_left == NULL || vec_right == NULL) 
+    {
         printf("Uno de los vectores es NULL.\n");
         return NULL;
     }
 
     struct Complex* resulting_vector = (struct Complex*)malloc((left_size + right_size) * sizeof(struct Complex));
-    if (resulting_vector == NULL) {
+    if (resulting_vector == NULL) 
+    {
         printf("Fallo en la asignación de memoria.\n");
         return NULL;
     }
 
-    for (uint8_t k = 0; k < left_size; k++) {
+    for (uint8_t k = 0; k < left_size; k++) 
+    {
         resulting_vector[k].real = vec_left[k].real;
         resulting_vector[k].imag = vec_left[k].imag;
     }
-    for (uint8_t m = 0; m < right_size; m++) {
+    for (uint8_t m = 0; m < right_size; m++) 
+    {
         resulting_vector[m + left_size].real = vec_right[m].real;
         resulting_vector[m + left_size].imag = vec_right[m].imag;
     }
