@@ -528,7 +528,7 @@ struct Complex* resize_Complex_vector(struct Complex* old_vector, uint8_t old_si
     {
         new_vector[k].real = old_vector[k].real;
         new_vector[k].imag = old_vector[k].imag;
-        printf("\n\nCopiando: (%.2f, %.2f) al nuevo vector.\n", old_vector[k].real, old_vector[k].imag);
+        //printf("\n\nCopiando: (%.2f, %.2f) al nuevo vector.\n", old_vector[k].real, old_vector[k].imag);
     }
 
     // Inicializar los nuevos elementos si el vector crece
@@ -560,7 +560,7 @@ struct Complex* removeItem_Complex_vector(struct Complex* vec, uint8_t vec_size,
     }
     if (item_pos >= vec_size)
     {
-        printf("Posición inválida para insertar.\n");
+        printf("Posición inválida para eliminar.\n");
         return NULL;
     }
 
