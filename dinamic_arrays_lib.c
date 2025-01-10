@@ -570,19 +570,13 @@ struct Complex* removeItem_Complex_vector(struct Complex* vec, uint8_t vec_size,
         printf("Fallo en la asignación de memoria.\n");
         return NULL;
     }
-
-    for (uint8_t k = 0; k < vec_size - 1; k++) 
+    for (uint8_t k = 0, j = 0; k < vec_size; k++) 
     {
-
-        if(k < item_pos)
+        if (k != item_pos) 
         {
-            resulting_vector[k].real = vec[k].real;
-            resulting_vector[k].imag = vec[k].imag;
-        }
-        if(k > item_pos)
-        {
-            resulting_vector[k].real = vec[k + 1].real;
-            resulting_vector[k].imag = vec[k + 1].imag;
+            resulting_vector[j].real = vec[k].real;
+            resulting_vector[j].imag = vec[k].imag;
+            j++;
         }
     }
 
