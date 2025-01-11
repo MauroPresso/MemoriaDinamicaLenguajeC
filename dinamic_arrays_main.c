@@ -207,8 +207,52 @@ int main()
     */
     // VECTORES COMPLEJOS
     printf("\n\n\nVECTORES COMPLEJOS:");
-
     
+
+    // Inserting an item in vector V.
+    struct Complex* voc = (struct Complex*)malloc(10 * sizeof(struct Complex));
+    llenar_Complex_vector(voc, 10);
+    printf("\nVector V:\n");
+    show_Complex_vector(voc, 10);
+    //printf("\nMaria paso por aqui\n");
+    struct Complex value;
+    value.real = rand() / (float) RAND_MAX;
+    value.imag = rand() / (float) RAND_MAX; 
+    voc = insertItem_Complex_vector(voc, 10, 7, value);
+    printf("\nVector V (with a new item):\n");
+    show_Complex_vector(voc, 11);
+    //printf("\nMaria paso por aqui\n");
+    
+    // Removing an item from vector V.
+    voc = removeItem_Complex_vector(voc, 11, 7);
+    printf("\nVector V (without an old item):\n");
+    show_Complex_vector(voc, 10);
+    //printf("\nMaria paso por aqui\n");
+    free(voc);
+    //printf("\nMaria paso por aqui\n");
+    voc = NULL;
+    //printf("\nMaria paso por aqui\n");
+    
+    // Resizing vector V.
+    struct Complex* vco = (struct Complex*)malloc(10 * sizeof(struct Complex));
+    llenar_Complex_vector(vco, 10);
+    printf("\nVector V:\n");
+    show_Complex_vector(vco, 10);
+    //printf("\nMaria paso por aqui\n");
+    vco = resize_Complex_vector(vco, 10, 5);
+    printf("\nVector V resized (new_size < old_size):\n");
+    show_Complex_vector(vco, 5);
+    //printf("\nMaria paso por aqui\n");
+    vco = resize_Complex_vector(vco, 5, 10);
+    printf("\nVector V resized (new_size > old_size):\n");
+    //llenar_Complex_vector(vco, 10);
+    show_Complex_vector(vco, 10);
+    //printf("\nMaria paso por aqui\n");
+    free(vco);
+    //printf("\nMaria paso por aqui\n");
+    vco = NULL;
+
+    //("\nMaria paso por aqui\n");
     struct Complex* vc = (struct Complex*)malloc(10 * sizeof(struct Complex));
     struct Complex* uc = (struct Complex*)malloc(5 * sizeof(struct Complex));
     // vector dinamico V
@@ -224,56 +268,15 @@ int main()
     cadc = concat_Complex_vector(vc, 10, uc, 5);
     printf("\nVector concatenado:\n");
     show_Complex_vector(cadc, 15);
-
+    //printf("\nMaria paso por aqui\n");
     free(vc);
     free(uc);
     free(cadc);
-    
+    //printf("\nMaria paso por aqui\n");
     vc = NULL;
     uc = NULL;
     cadc = NULL;
-    
-    
-    // Inserting an item in vector V.
-    struct Complex* voc = (struct Complex*)malloc(10 * sizeof(struct Complex));
-    llenar_Complex_vector(voc, 10);
-    printf("\nVector V:\n");
-    show_Complex_vector(voc, 10);
-    struct Complex value;
-    value.real = rand() / (float) RAND_MAX;
-    value.imag = rand() / (float) RAND_MAX; 
-    voc = insertItem_Complex_vector(voc, 10, 7, value);
-    printf("\nVector V (with a new item):\n");
-    show_Complex_vector(voc, 11);
-    // Removing an item from vector V.
-    voc = removeItem_Complex_vector(voc, 11, 7);
-    printf("\nVector V (without an old item):\n");
-    show_Complex_vector(voc, 10);
-    
-    free(voc);
-    voc = NULL;
-
-    
-    // Resizing vector V.
-    struct Complex* vco = (struct Complex*)malloc(10 * sizeof(struct Complex));
-    llenar_Complex_vector(vco, 10);
-    printf("\nVector V:\n");
-    show_Complex_vector(vco, 10);
-    
-    vco = resize_Complex_vector(vco, 10, 5);
-    printf("\nVector V resized (new_size < old_size):\n");
-    show_Complex_vector(vco, 5);
-
-    vco = resize_Complex_vector(vco, 5, 10);
-    printf("\nVector V resized (new_size > old_size):\n");
-    //llenar_Complex_vector(vco, 10);
-    show_Complex_vector(vco, 10);
-    
-    free(vco);
-    vco = NULL;
-
-    
-    
+    //printf("\nMaria paso por aqui\n");
     
     // FIN DEL PROGRAMA
     return 0;
